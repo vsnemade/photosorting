@@ -1,0 +1,14 @@
+/src/main/resources/models/pytorch/vggface2/vggface2.pt
+/.idea/
+/Input/
+/Predict/
+/target/
+/build/
+/out/
+/model/
+*.log
+*.class
+*.jar
+*.war
+*.iml
+*.idea/

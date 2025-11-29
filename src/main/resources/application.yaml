@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: webapplication
+facefinder:
+  photos:
+    folder: "C:\\Vishal-OnePlus-17July2023\\WhatsappImages"
+  similarity:
+    threshold: 50
