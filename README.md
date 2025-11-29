@@ -3,12 +3,70 @@
 This project is a **deep-learning powered photo sorting tool** that helps you organize large collections of images.  
 It uses **face detection** and **face matching** models to automatically:
 
-- Identify whether an image contains a face
-- Detect and extract facial embeddings
-- Compare faces across images
-- Move unmatched or no-face images to designated folders
+## 🧠 Deep Learning Approach
 
-The application is implemented in Java and uses **DJL (Deep Java Library)** with **PyTorch** models.
+This application uses two deep learning models working together to detect, analyze, and compare human faces in images. 
+These models are loaded and executed using **DJL (Deep Java Library)** with the **PyTorch** engine.
+
+---
+
+### 1️⃣ Face Detection Model
+
+The first step in the pipeline is detecting whether an image contains a human face.  
+For this, the app uses DJL’s **pre-trained face detection model** (based on a modern object detection architecture such as RetinaFace or SSD).
+
+**What it does:**
+
+- Identifies faces present in an image
+- Returns bounding boxes and confidence scores
+- Helps filter out images with **no detectable face**
+
+This model powers the **`noface`** command, which automatically moves images without faces into a separate folder.
+
+---
+
+### 2️⃣ Face Embedding Model (VGGFace2)
+
+For comparing and grouping faces, the application uses a **PyTorch VGGFace2 model**, a deep convolutional neural network trained on millions of face images.
+
+**How it works:**
+
+- When a face is detected, the model generates a **128-D or 512-D embedding vector (`double[]`)**
+- This vector captures the **unique features** of the person's face
+- Two faces are compared by calculating the **distance between their embedding vectors**
+
+Interpretation:
+
+- **Small distance → same person**
+- **Large distance → different people**
+
+This model powers the **`matchface`** command to automatically identify unmatched faces and move them to a separate folder.
+
+---
+
+### 🧬 How Both Models Work Together
+
+1. **Face Detection**
+    - Detects whether the image contains a face
+    - If no face → image moved to `noface/`
+
+2. **Face Embedding Extraction**
+    - For detected faces, the embedding model extracts deep-learning-based feature vectors
+
+3. **Face Comparison**
+    - Embeddings are compared with a reference or across images
+    - Non-matching images are moved to `unmatched/`
+
+---
+
+### ⭐ Why This Approach Works Well
+
+- Based on large, high-quality datasets (VGGFace2)
+- Highly accurate for face matching
+- Works with variations in pose, lighting, and background
+- Efficient enough to process large image collections
+- Fully automated with no manual tagging required
+
 
 ---
 
